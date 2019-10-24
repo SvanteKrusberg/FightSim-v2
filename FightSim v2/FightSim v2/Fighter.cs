@@ -4,18 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FightSim_v1
+namespace FightSim_v2
 {
     class Fighter
     {
         //Nödvändiga variablar
-        private int hp = 100;
+        protected int hp = 100;
+        protected int evasivness = 0;
+        protected int armor = 0;
         public string name;
         //En random generator för att slumpa tal
-        Random generator = new Random();
+        protected Random generator = new Random();
 
         //En metod som slumpar ett attack värde mellan 1 och 20, sedan returneras detta värde som en int
-        public int Attack()
+        public virtual int Attack()
         {
             int dmg = generator.Next(1, 21);
             return dmg;
@@ -24,7 +26,9 @@ namespace FightSim_v1
         //En metod som skadar Fightern, denna tar emot en int som parameter
         public void Hurt(int amount)
         {
-            hp -= amount;
+            
+                hp -= amount - armor;
+
 
         }
 
@@ -48,6 +52,24 @@ namespace FightSim_v1
         public int GetHp()
         {
             return hp;
+
+        }
+
+        public bool Hit()
+        {
+            int hit = generator.Next(1, 101) - evasivness;
+
+            if (hit >= 30)
+            {
+                return true;
+
+            }
+            else
+            {
+
+                return false;
+
+            }
 
         }
 
